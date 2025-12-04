@@ -6,9 +6,22 @@
 }
 
 body {
-  color: #333;
-  background: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #033e5b;
+  
+  /* Pool water background */
+  background:
+    radial-gradient(circle at 20 percent 20 percent, rgba(255,255,255,0.8), rgba(255,255,255,0) 50 percent),
+    radial-gradient(circle at 80 percent 30 percent, rgba(255,255,255,0.7), rgba(255,255,255,0) 60 percent),
+    radial-gradient(circle at 50 percent 80 percent, rgba(255,255,255,0.6), rgba(255,255,255,0) 55 percent),
+    linear-gradient(to bottom right, #7cd3ff, #b9ecff 40 percent, #7cd3ff);
+
+  background-size: cover;
+  background-attachment: fixed;
 }
+
 
 .container {
   width: 90%;
