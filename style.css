@@ -10,7 +10,7 @@ body {
   height: 100%;
 }
 
-/* Body with primary dramatic pool water animation */
+/* Body with extreme visible animated pool texture */
 body {
   margin: 0;
   padding: 0;
@@ -19,90 +19,46 @@ body {
   position: relative;
   overflow-x: hidden;
 
+  /* High contrast bright water */
   background:
-    radial-gradient(circle at 12% 18%, rgba(255,255,255,1), rgba(255,255,255,0) 35%),
-    radial-gradient(circle at 85% 22%, rgba(255,255,255,0.95), rgba(255,255,255,0) 45%),
-    radial-gradient(circle at 35% 90%, rgba(255,255,255,0.95), rgba(255,255,255,0) 38%),
-    radial-gradient(circle at 78% 75%, rgba(255,255,255,0.9), rgba(255,255,255,0) 42%),
-    linear-gradient(to bottom right, #4fc4ff, #d4f5ff 40%, #4fc4ff);
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,1), rgba(255,255,255,0) 25%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.95), rgba(255,255,255,0) 30%),
+    radial-gradient(circle at 20% 85%, rgba(255,255,255,0.95), rgba(255,255,255,0) 28%),
+    radial-gradient(circle at 85% 80%, rgba(255,255,255,0.95), rgba(255,255,255,0) 30%),
+    linear-gradient(to bottom right, #0088ff, #55ddff 40%, #0088ff);
 
-  background-size: 260% 260%;
+  background-size: 140% 140%;
   background-attachment: fixed;
 
-  animation: pool-ripple-strong 16s ease-in-out infinite alternate;
+  /* Faster and stronger motion for testing */
+  animation: pool-ripple-test 10s linear infinite;
 }
 
-/* Secondary caustic layer for overlapping ripples */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-
-  background:
-    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.8), rgba(255,255,255,0) 32%),
-    radial-gradient(circle at 90% 35%, rgba(255,255,255,0.75), rgba(255,255,255,0) 40%),
-    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.75), rgba(255,255,255,0) 36%),
-    radial-gradient(circle at 75% 90%, rgba(255,255,255,0.8), rgba(255,255,255,0) 38%);
-
-  background-size: 220% 220%;
-  mix-blend-mode: screen;
-  opacity: 0.75;
-
-  animation: pool-ripple-secondary 24s linear infinite alternate;
-}
-
-/* Primary strong ripple animation */
-@keyframes pool-ripple-strong {
+/* Single strong ripple animation for visibility */
+@keyframes pool-ripple-test {
   0% {
     background-position:
       0% 0%,
-      50% 10%,
-      80% 90%,
-      100% 60%,
+      50% 0%,
+      0% 100%,
+      100% 100%,
       0% 0%;
   }
   50% {
     background-position:
-      25% 30%,
-      70% 40%,
-      50% 100%,
-      90% 80%,
-      40% 40%;
+      20% 20%,
+      70% 10%,
+      10% 80%,
+      80% 90%,
+      50% 50%;
   }
   100% {
     background-position:
       0% 40%,
+      40% 30%,
       20% 60%,
-      95% 70%,
-      60% 100%,
+      100% 80%,
       100% 100%;
-  }
-}
-
-/* Secondary ripple animation, offset for overlapping motion */
-@keyframes pool-ripple-secondary {
-  0% {
-    background-position:
-      10% 0%,
-      80% 10%,
-      20% 80%,
-      60% 100%;
-  }
-  50% {
-    background-position:
-      30% 20%,
-      60% 30%,
-      40% 90%,
-      80% 80%;
-  }
-  100% {
-    background-position:
-      0% 40%,
-      40% 60%,
-      80% 70%,
-      100% 90%;
   }
 }
 
@@ -139,7 +95,7 @@ body::before {
   text-decoration: underline;
 }
 
-/* Hero with strong contrast translucent panel */
+/* Hero with translucent panel */
 .hero {
   background: rgba(255,255,255,0.5);
   padding: 80px 0;
@@ -177,7 +133,7 @@ body::before {
   margin: 60px auto;
 }
 
-/* Cards with more visible contrast */
+/* Cards with visible contrast */
 .feature-card {
   background: rgba(255,255,255,0.9);
   padding: 25px;
