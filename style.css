@@ -5,12 +5,19 @@
   font-family: Arial, sans-serif;
 }
 
-/* Body with dramatic pool water animation */
+html,
+body {
+  height: 100%;
+}
+
+/* Body with primary dramatic pool water animation */
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   color: #033e5b;
+  position: relative;
+  overflow-x: hidden;
 
   background:
     radial-gradient(circle at 12% 18%, rgba(255,255,255,1), rgba(255,255,255,0) 35%),
@@ -25,7 +32,28 @@ body {
   animation: pool-ripple-strong 16s ease-in-out infinite alternate;
 }
 
-/* Strong dramatic ripple animation */
+/* Secondary caustic layer for overlapping ripples */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.8), rgba(255,255,255,0) 32%),
+    radial-gradient(circle at 90% 35%, rgba(255,255,255,0.75), rgba(255,255,255,0) 40%),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.75), rgba(255,255,255,0) 36%),
+    radial-gradient(circle at 75% 90%, rgba(255,255,255,0.8), rgba(255,255,255,0) 38%);
+
+  background-size: 220% 220%;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+
+  animation: pool-ripple-secondary 24s linear infinite alternate;
+}
+
+/* Primary strong ripple animation */
 @keyframes pool-ripple-strong {
   0% {
     background-position:
@@ -53,11 +81,38 @@ body {
   }
 }
 
+/* Secondary ripple animation, offset for overlapping motion */
+@keyframes pool-ripple-secondary {
+  0% {
+    background-position:
+      10% 0%,
+      80% 10%,
+      20% 80%,
+      60% 100%;
+  }
+  50% {
+    background-position:
+      30% 20%,
+      60% 30%,
+      40% 90%,
+      80% 80%;
+  }
+  100% {
+    background-position:
+      0% 40%,
+      40% 60%,
+      80% 70%,
+      100% 90%;
+  }
+}
+
 /* Layout container */
 .container {
   width: 90%;
   max-width: 1100px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Header styled like deep water shading */
