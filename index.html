@@ -3,51 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Test Site</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <title>HDryWall - Professional Drywall Services</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header class="header">
-    <div class="container">
-      <h1 class="site-title">My Test Website</h1>
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-mark">HD</span>
+        <span class="logo-text">HDryWall</span>
+      </div>
       <nav class="nav">
-        <a href="#">Home</a>
-        <a href="#">Services</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="#slideshow">Projects</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container hero-content">
-      <h2>Clean. Simple. Test Friendly.</h2>
-      <p>This layout is designed for quick GitHub Pages previews so you can focus on structure and design without distractions.</p>
-      <a href="#" class="btn">Learn More</a>
+  <!-- Hero slideshow -->
+  <section id="slideshow" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="slideshow-wrapper">
+      <div class="slide active">
+        <img src="images/drywall-1.jpg" alt="Smooth finished drywall in modern living room">
+      </div>
+      <div class="slide">
+        <img src="images/drywall-2.jpg" alt="Professional drywall installation in new construction">
+      </div>
+      <div class="slide">
+        <img src="images/drywall-3.jpg" alt="Clean drywall repair in residential hallway">
+      </div>
+    </div>
+
+    <div class="hero-content container">
+      <h1>Clean Lines. Smooth Walls. Professional Finish.</h1>
+      <p>Drywall installation, repair, and finishing for homeowners, contractors, and property managers.</p>
+      <a href="#contact" class="btn btn-primary">Request a free estimate</a>
+    </div>
+
+    <button class="slide-control prev" aria-label="Previous slide">‹</button>
+    <button class="slide-control next" aria-label="Next slide">›</button>
+
+    <div class="slide-dots" aria-label="Slideshow navigation">
+      <button class="dot active" data-index="0"></button>
+      <button class="dot" data-index="1"></button>
+      <button class="dot" data-index="2"></button>
     </div>
   </section>
 
-  <section class="features container">
-    <div class="feature-card">
-      <h3>Fast Loading</h3>
-      <p>Minimal code for quick updates and instant visual checks in GitHub Pages.</p>
-    </div>
+  <!-- Services summary -->
+  <section id="services" class="section section-light">
+    <div class="container">
+      <h2>Drywall services</h2>
+      <p class="section-intro">
+        From small patch jobs to full remodels, we deliver smooth, paint ready walls and ceilings.
+      </p>
 
-    <div class="feature-card">
-      <h3>Easy to Edit</h3>
-      <p>Update only a few lines to test spacing, fonts, layout flow, and colors.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>New drywall installation</h3>
+          <p>Ideal for new construction, additions, and full gut remodels. Clean layouts, straight corners, and solid backing.</p>
+        </div>
+        <div class="service-card">
+          <h3>Repair and patches</h3>
+          <p>Water damage, cracks, and holes repaired so they blend in with the existing texture and paint.</p>
+        </div>
+        <div class="service-card">
+          <h3>Finishing and texture</h3>
+          <p>Level 4 and Level 5 finishes, knockdown, orange peel, or custom textures matched to your existing walls.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="feature-card">
-      <h3>Expandable</h3>
-      <p>Add sections or connect to larger projects once you like the structure.</p>
+  <!-- Image gallery -->
+  <section id="gallery" class="section section-dark">
+    <div class="container">
+      <h2>Project gallery</h2>
+      <p class="section-intro">
+        A quick look at recent drywall work. Click any image to view it larger.
+      </p>
+
+      <div class="gallery-grid">
+        <!-- Use the same or different images, swap paths anytime -->
+        <button class="gallery-item" data-full="images/drywall-1-large.jpg">
+          <img src="images/drywall-1-thumb.jpg" alt="Finished living room drywall">
+        </button>
+        <button class="gallery-item" data-full="images/drywall-2-large.jpg">
+          <img src="images/drywall-2-thumb.jpg" alt="Drywall installation in progress">
+        </button>
+        <button class="gallery-item" data-full="images/drywall-3-large.jpg">
+          <img src="images/drywall-3-thumb.jpg" alt="Smooth ceiling drywall work">
+        </button>
+        <button class="gallery-item" data-full="images/drywall-4-large.jpg">
+          <img src="images/drywall-4-thumb.jpg" alt="Drywall repair before and after">
+        </button>
+        <button class="gallery-item" data-full="images/drywall-5-large.jpg">
+          <img src="images/drywall-5-thumb.jpg" alt="Commercial drywall project">
+        </button>
+        <button class="gallery-item" data-full="images/drywall-6-large.jpg">
+          <img src="images/drywall-6-thumb.jpg" alt="Drywall detail around window">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox for gallery -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content" role="dialog" aria-modal="true">
+      <button class="lightbox-close" aria-label="Close image">×</button>
+      <img id="lightbox-image" src="" alt="Expanded drywall project photo">
+    </div>
+  </div>
+
+  <!-- Contact section -->
+  <section id="contact" class="section section-light">
+    <div class="container contact-layout">
+      <div>
+        <h2>Request a quote</h2>
+        <p class="section-intro">
+          Share a bit about your drywall project and we will follow up with options, timing, and pricing.
+        </p>
+        <ul class="contact-details">
+          <li><strong>Phone:</strong> (808) 555 1234</li>
+          <li><strong>Email:</strong> info@hdrywall.com</li>
+          <li><strong>Service area:</strong> Local region example, update later</li>
+        </ul>
+      </div>
+
+      <form class="contact-form">
+        <label>
+          Name
+          <input type="text" name="name" placeholder="Your name">
+        </label>
+        <label>
+          Phone or email
+          <input type="text" name="contact" placeholder="Best number or email">
+        </label>
+        <label>
+          Project details
+          <textarea name="details" rows="4" placeholder="Repairs, new install, square footage, timeline"></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">Send request</button>
+      </form>
     </div>
   </section>
 
   <footer class="footer">
-    <p>© 2025 My Test Site</p>
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> HDryWall. All rights reserved.</p>
+    </div>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
