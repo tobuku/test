@@ -1,5 +1,5 @@
 // Simple slideshow and lightbox for H Drywall test site
-alert("H Drywall script loaded");
+
 document.addEventListener("DOMContentLoaded", () => {
   const slides = Array.from(document.querySelectorAll(".slide"));
   const dots = Array.from(document.querySelectorAll(".dot"));
