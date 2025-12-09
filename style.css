@@ -549,3 +549,20 @@ a:hover {
     width: min(360px, 100%);
   }
 }
+/* Ensure FAQ cards show dark text inside .section-dark */
+.section-dark .testimonial-card {
+  color: #1f2937; /* Slate gray, same as your light sections */
+}
+
+.section-dark .testimonial-card h3 {
+  color: #111827; /* Dark header text */
+}
+
+.section-dark .testimonial-card p {
+  color: #374151;
+}
+.section-dark .testimonial-card {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
