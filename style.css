@@ -102,7 +102,7 @@ a:hover {
 }
 
 .brand-banner-logo {
-  width: min(360px, 100%);
+  width: min(480px, 100%);
   height: auto;
   display: block;
 }
@@ -546,6 +546,6 @@ a:hover {
   }
 
   .brand-banner-logo {
-    width: min(300px, 100%);
+    width: min(360px, 100%);
   }
 }
