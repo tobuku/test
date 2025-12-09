@@ -53,7 +53,7 @@ a:hover {
   padding: 0.75rem 0;
 }
 
-/* Logo with image */
+/* Small logo in header */
 
 .logo {
   display: flex;
@@ -62,7 +62,7 @@ a:hover {
 }
 
 .logo img {
-  height: 32px;
+  height: 28px;
   width: auto;
   display: block;
 }
@@ -88,6 +88,25 @@ a:hover {
   text-decoration: none;
 }
 
+/* Large brand banner under nav */
+
+.brand-banner {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand-banner-inner {
+  display: flex;
+  justify-content: center;
+  padding: 1.4rem 0 1.6rem;
+}
+
+.brand-banner-logo {
+  width: min(360px, 100%);
+  height: auto;
+  display: block;
+}
+
 /* Hero static collage */
 
 .hero {
@@ -98,7 +117,7 @@ a:hover {
   background: #f3f4f6;
   color: #111827;
   min-height: 380px;
-  padding: 3.2rem 0 3.4rem;
+  padding: 2.6rem 0 3.4rem;
 }
 
 .hero-flex {
@@ -499,7 +518,7 @@ a:hover {
   }
 
   .hero-static {
-    padding-top: 2.6rem;
+    padding-top: 2.3rem;
   }
 
   .hero-flex {
@@ -520,5 +539,13 @@ a:hover {
 
   .contact-layout {
     grid-template-columns: 1fr;
+  }
+
+  .brand-banner-inner {
+    padding: 1.1rem 0 1.3rem;
+  }
+
+  .brand-banner-logo {
+    width: min(300px, 100%);
   }
 }
