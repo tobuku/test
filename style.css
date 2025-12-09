@@ -53,28 +53,23 @@ a:hover {
   padding: 0.75rem 0;
 }
 
+/* Logo with image */
+
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 700;
+  gap: 0.6rem;
 }
 
-.logo-mark {
-  width: 32px;
+.logo img {
   height: 32px;
-  border-radius: 999px;
-  background: #f97316;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 18px;
-  color: #111827;
+  width: auto;
+  display: block;
 }
 
 .logo-text {
   font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .nav {
@@ -151,13 +146,15 @@ a:hover {
   border: none;
 }
 
+/* Primary buttons: green with black text */
+
 .btn-primary {
-  background: #f97316;
+  background: #22c55e;
   color: #111827;
 }
 
 .btn-primary:hover {
-  background: #ea580c;
+  background: #16a34a;
 }
 
 .btn-ghost {
@@ -425,8 +422,8 @@ a:hover {
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: #f97316;
-  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.35);
+  border-color: #22c55e;
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.35);
 }
 
 /* Footer */
