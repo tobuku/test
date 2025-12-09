@@ -504,6 +504,111 @@ a:hover {
   cursor: pointer;
 }
 
+/* Sticky contact bar at bottom */
+
+.sticky-contact-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.96);
+  color: #e5e7eb;
+  z-index: 60;
+  padding: 0.6rem 0;
+  backdrop-filter: blur(6px);
+}
+
+.sticky-contact-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.sticky-contact-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sticky-contact-main span {
+  font-weight: 500;
+}
+
+.sticky-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sticky-contact-phone {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: #111827;
+  color: #f9fafb;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.sticky-contact-phone:hover {
+  background: #020617;
+  text-decoration: none;
+}
+
+.sticky-contact-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: #22c55e;
+  color: #111827;
+  font-weight: 600;
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.sticky-contact-btn:hover {
+  background: #16a34a;
+  text-decoration: none;
+}
+
+/* Floating Book repair button */
+
+.floating-cta-btn {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 3.8rem;
+  z-index: 70;
+  background: #22c55e;
+  color: #111827;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.55);
+  text-decoration: none;
+}
+
+.floating-cta-btn:hover {
+  background: #16a34a;
+  text-decoration: none;
+}
+
+/* FAQ text colors inside dark section */
+
+.section-dark .testimonial-card {
+  background: #ffffff;
+  color: #1f2937;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.section-dark .testimonial-card h3 {
+  color: #111827;
+}
+
+.section-dark .testimonial-card p {
+  color: #374151;
+}
+
 /* Responsive tweaks */
 
 @media (max-width: 768px) {
@@ -548,21 +653,20 @@ a:hover {
   .brand-banner-logo {
     width: min(360px, 100%);
   }
-}
-/* Ensure FAQ cards show dark text inside .section-dark */
-.section-dark .testimonial-card {
-  color: #1f2937; /* Slate gray, same as your light sections */
+
+  .sticky-contact-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .floating-cta-btn {
+    right: 0.9rem;
+    bottom: 4.1rem;
+  }
 }
 
-.section-dark .testimonial-card h3 {
-  color: #111827; /* Dark header text */
+@media (max-width: 480px) {
+  .floating-cta-btn {
+    display: none;
+  }
 }
-
-.section-dark .testimonial-card p {
-  color: #374151;
-}
-.section-dark .testimonial-card {
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-
