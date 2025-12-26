@@ -1,3 +1,4 @@
+console.log("HDrywall GSAP init: script.js loaded");
 // Simple slideshow and lightbox for H Drywall test site
 
 document.addEventListener("DOMContentLoaded", () => {
