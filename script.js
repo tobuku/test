@@ -137,95 +137,206 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ------------------------------
-  // GSAP animations (optional)
-  // ------------------------------
-  // This site is hosted on GitHub Pages, so we load GSAP via CDN in the HTML.
-  // If those CDN scripts fail to load, everything below is safely skipped.
-  if (window.gsap) {
-    try {
-      if (window.ScrollTrigger) {
-        gsap.registerPlugin(ScrollTrigger);
-      }
 
-      // Respect reduced motion preferences
-      const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduceMotion) {
-        // Reduced motion requested: skip animations, keep everything usable.
-      } else {
+// GSAP animations (stylish)
+// ------------------------------
+// This site is hosted on GitHub Pages, so we load GSAP via CDN in the HTML.
+// If those CDN scripts fail to load, everything below is safely skipped.
+if (window.gsap) {
+  try {
+    if (window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+    }
 
-      // Base defaults for a consistent, professional feel
-      gsap.defaults({ ease: "power2.out", duration: 0.8 });
+    console.log("HDrywall GSAP init: animations armed");
 
-      // Header + nav
+    // Reduced motion support
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Helpers
+    const prefersHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+
+    const setInitial = (selector) => {
+      const els = gsap.utils.toArray(selector);
+      if (!els.length) return;
+      gsap.set(els, { willChange: "transform,opacity,filter" });
+    };
+
+    // Make animations more obvious, but still professional:
+    // - larger travel distance
+    // - slight scale
+    // - slight blur that resolves
+    // - snappy easing
+    gsap.defaults({ ease: "power3.out", duration: 0.95 });
+
+    if (!reduceMotion) {
+      // Header drop-in
       const header = document.querySelector(".site-header");
       if (header) {
-        gsap.from(header, { y: -16, opacity: 0, duration: 0.7 });
+        setInitial(header);
+        gsap.fromTo(
+          header,
+          { y: -28, opacity: 0, filter: "blur(6px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }
+        );
       }
 
-      // Hero timeline (works on home + service pages)
+      // HERO: bold entrance with stagger, slight scale, and optional image parallax
       const hero = document.querySelector(".hero");
       if (hero) {
-        const heroTl = gsap.timeline({ delay: 0.1 });
         const heroH1 = hero.querySelector("h1");
         const heroP = hero.querySelector("p");
         const heroBtns = hero.querySelectorAll(".btn");
         const heroImgs = hero.querySelectorAll("img");
 
-        if (heroH1) heroTl.from(heroH1, { y: 18, opacity: 0 }, 0);
-        if (heroP) heroTl.from(heroP, { y: 18, opacity: 0 }, 0.08);
-        if (heroBtns && heroBtns.length) heroTl.from(heroBtns, { y: 10, opacity: 0, stagger: 0.08 }, 0.16);
+        setInitial([heroH1, heroP, heroBtns, heroImgs].flat());
+
+        const tl = gsap.timeline({ delay: 0.12 });
+
+        if (heroH1) {
+          tl.fromTo(
+            heroH1,
+            { y: 46, opacity: 0, scale: 0.98, filter: "blur(10px)" },
+            { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.0 }
+          );
+        }
+
+        if (heroP) {
+          tl.fromTo(
+            heroP,
+            { y: 26, opacity: 0, filter: "blur(8px)" },
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.85 },
+            "-=0.55"
+          );
+        }
+
+        if (heroBtns && heroBtns.length) {
+          tl.fromTo(
+            heroBtns,
+            { y: 18, opacity: 0, scale: 0.97 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.08, ease: "back.out(1.6)" },
+            "-=0.35"
+          );
+        }
 
         if (heroImgs && heroImgs.length) {
-          heroTl.from(heroImgs, { scale: 0.98, opacity: 0, stagger: 0.06, duration: 0.9 }, 0.1);
+          tl.fromTo(
+            heroImgs,
+            { y: 30, opacity: 0, scale: 0.96, filter: "blur(10px)" },
+            { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.9, stagger: 0.08 },
+            "-=0.35"
+          );
+
+          // Gentle parallax on scroll (only if ScrollTrigger exists)
+          if (window.ScrollTrigger) {
+            heroImgs.forEach((img) => {
+              gsap.to(img, {
+                y: -16,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: hero,
+                  start: "top top",
+                  end: "bottom top",
+                  scrub: 0.6
+                }
+              });
+            });
+          }
         }
       }
 
-      // Scroll reveal helper
-      function revealOnScroll(selector, opts = {}) {
+      // Scroll reveals: more obvious and stylish
+      const revealOnScroll = (selector, options = {}) => {
+        if (!window.ScrollTrigger) return;
         const elements = gsap.utils.toArray(selector);
-        if (!elements.length || !window.ScrollTrigger) return;
+        if (!elements.length) return;
+
+        const {
+          stagger = 0.08,
+          start = "top 78%",
+          y = 36,
+          scale = 0.985,
+          rotate = 0,
+          duration = 0.9
+        } = options;
 
         elements.forEach((el) => {
-          // Skip hidden elements
           const style = window.getComputedStyle(el);
           if (style.display === "none" || style.visibility === "hidden") return;
 
-          gsap.from(el, {
-            opacity: 0,
-            y: 22,
-            duration: 0.7,
-            ...opts,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          });
+          gsap.fromTo(
+            el,
+            { y, opacity: 0, scale, rotate, filter: "blur(10px)" },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+              filter: "blur(0px)",
+              duration,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: el,
+                start,
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
         });
-      }
 
-      // Home sections + reusable blocks
-      revealOnScroll(".section .container > h2");
-      revealOnScroll(".section .section-intro, .section p.section-intro");
-      revealOnScroll(".services-grid .service-card", { stagger: 0.06 });
-      revealOnScroll(".projects-grid .project-card", { stagger: 0.06 });
-      revealOnScroll(".gallery-grid .gallery-item", { stagger: 0.04 });
-      revealOnScroll(".reviews-grid .review-card", { stagger: 0.06 });
-      revealOnScroll(".contact-layout > *", { stagger: 0.05 });
+        // Optional stagger for groups that share a container
+        if (elements.length > 1 && stagger > 0) {
+          const parent = elements[0].parentElement;
+          if (parent) {
+            ScrollTrigger.create({
+              trigger: parent,
+              start,
+              onEnter: () => {
+                gsap.fromTo(
+                  elements,
+                  { y: y * 0.8, opacity: 0, scale, filter: "blur(10px)" },
+                  { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: duration * 0.9, stagger, overwrite: "auto" }
+                );
+              },
+              once: true
+            });
+          }
+        }
+      };
+
+      // Home sections, cards, and common blocks
+      revealOnScroll("section");
+      revealOnScroll(".services-grid .service-card", { stagger: 0.10, y: 44, rotate: 0.6, duration: 0.95 });
+      revealOnScroll(".projects-grid .project-card", { stagger: 0.10, y: 44, rotate: -0.6, duration: 0.95 });
+      revealOnScroll(".gallery-grid .gallery-item", { stagger: 0.06, y: 34, scale: 0.98, duration: 0.85 });
+      revealOnScroll(".reviews-grid .review-card", { stagger: 0.10, y: 40, duration: 0.95 });
+      revealOnScroll(".contact-layout > *", { stagger: 0.10, y: 34, duration: 0.9 });
 
       // Detail pages
-      revealOnScroll(".breadcrumbs");
-      revealOnScroll(".service-detail, .service-detail > *", { stagger: 0.04 });
+      revealOnScroll(".breadcrumbs", { y: 24, duration: 0.75 });
+      revealOnScroll(".service-detail, .service-detail > *", { stagger: 0.06, y: 34, duration: 0.9 });
 
-      // Subtle button hover micro-interaction (GSAP-powered, but lightweight)
+      // Button micro interactions: more noticeable, still tasteful
       const buttons = document.querySelectorAll(".btn");
       buttons.forEach((btn) => {
-        btn.addEventListener("mouseenter", () => gsap.to(btn, { y: -2, duration: 0.18, ease: "power2.out" }));
-        btn.addEventListener("mouseleave", () => gsap.to(btn, { y: 0, duration: 0.22, ease: "power2.out" }));
+        gsap.set(btn, { transformOrigin: "50% 50%", willChange: "transform" });
+
+        if (prefersHover) {
+          btn.addEventListener("mouseenter", () => gsap.to(btn, { y: -3, scale: 1.02, duration: 0.18, ease: "power2.out" }));
+          btn.addEventListener("mouseleave", () => gsap.to(btn, { y: 0, scale: 1.0, duration: 0.22, ease: "power2.out" }));
+        }
+
+        btn.addEventListener("mousedown", () => gsap.to(btn, { scale: 0.98, duration: 0.08 }));
+        btn.addEventListener("mouseup", () => gsap.to(btn, { scale: 1.02, duration: 0.12 }));
+        btn.addEventListener("blur", () => gsap.to(btn, { scale: 1.0, duration: 0.12 }));
       });
-      }
-    } catch (err) {
-      // If anything goes wrong with GSAP, fail silently.
-      // The site should remain fully functional.
+    } else {
+      console.log("HDrywall GSAP: reduced motion enabled, skipping animations");
     }
+  } catch (err) {
+    // If anything goes wrong with GSAP, fail silently.
+    // The site should remain fully functional.
+    console.warn("HDrywall GSAP error:", err);
   }
+}
+
