@@ -150,9 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Respect reduced motion preferences
       const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduceMotion) {
-        // No motion, but keep the site fully usable.
-        return;
-      }
+        // Reduced motion requested: skip animations, keep everything usable.
+      } else {
 
       // Base defaults for a consistent, professional feel
       gsap.defaults({ ease: "power2.out", duration: 0.8 });
@@ -224,6 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("mouseenter", () => gsap.to(btn, { y: -2, duration: 0.18, ease: "power2.out" }));
         btn.addEventListener("mouseleave", () => gsap.to(btn, { y: 0, duration: 0.22, ease: "power2.out" }));
       });
+      }
     } catch (err) {
       // If anything goes wrong with GSAP, fail silently.
       // The site should remain fully functional.
