@@ -31,7 +31,8 @@ body {
 }
 
 .nav-bar {
-  background-color: #020617;
+  background-color: #f9fafb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   color: #f9fafb;
 }
 
@@ -171,7 +172,8 @@ body {
 .hero-photo-large {
   border-radius: 18px;
   overflow: hidden;
-  background-color: #020617;
+  background-color: #f9fafb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 22px 40px rgba(15, 23, 42, 0.32);
 }
 
@@ -204,7 +206,8 @@ body {
 }
 
 .section-alt {
-  background-color: #020617;
+  background-color: #f9fafb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   color: #e5e7eb;
 }
 
@@ -273,7 +276,8 @@ body {
 }
 
 .why-card {
-  background-color: #020617;
+  background-color: #f9fafb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 16px;
   padding: 1.25rem 1.3rem;
   border: 1px solid rgba(148, 163, 184, 0.55);
@@ -380,7 +384,8 @@ body {
 }
 
 .testimonial-card {
-  background-color: #020617;
+  background-color: #f9fafb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 16px;
   padding: 1.25rem 1.4rem;
   border: 1px solid rgba(148, 163, 184, 0.5);
@@ -483,7 +488,8 @@ body {
 /* Footer */
 
 .footer {
-  background-color: #020617;
+  background-color: #f9fafb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   color: #9ca3af;
   padding: 1.25rem 0;
 }
