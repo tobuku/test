@@ -450,28 +450,40 @@ gsap.set("#gallery .gallery-item img", { opacity: 1, filter: "none" });
   const imgs = gsap.utils.toArray("#gallery .gallery-item img");
   imgs.forEach((img) => {
     img.addEventListener("mouseenter", () => {
-      const kickX = gsap.utils.clamp(-140, 140, deltaX * 4.8);
-      const kickY = gsap.utils.clamp(-140, 140, deltaY * 4.8);
-      const tilt = (Math.random() - 0.5) * 18;
-
-      gsap.killTweensOf(img);
+      const kickX = gsap.utils.clamp(-260, 260, deltaX * 9.5);
+const kickY = gsap.utils.clamp(-260, 260, deltaY * 9.5);
+const tilt = (Math.random() - 0.5) * 30;
+gsap.killTweensOf(img);
 
       gsap.to(img, {
         x: kickX,
         y: kickY,
         rotate: tilt,
-        duration: 0.28,
-        ease: "power3.out",
+        scale: 1.03,
+        duration: 0.22,
+        ease: "power4.out",
         overwrite: true
       });
 
+      // Extra overshoot for a more "thrown" feel
       gsap.to(img, {
+        x: kickX * 1.18,
+        y: kickY * 1.18,
+        rotate: tilt * 1.15,
+        scale: 1.035,
+        duration: 0.14,
+        ease: "power1.inOut",
+        delay: 0.08,
+        overwrite: false
+      });
+gsap.to(img, {
         x: 0,
         y: 0,
         rotate: 0,
-        duration: 0.95,
-        ease: "elastic.out(1, 0.45)",
-        delay: 0.03
+        scale: 1,
+        duration: 1.05,
+        ease: "elastic.out(1.2, 0.28)",
+        delay: 0.02
       });
     });
 
@@ -480,6 +492,7 @@ gsap.set("#gallery .gallery-item img", { opacity: 1, filter: "none" });
         x: 0,
         y: 0,
         rotate: 0,
+        scale: 1,
         duration: 0.7,
         ease: "power3.out"
       });
