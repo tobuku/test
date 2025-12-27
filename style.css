@@ -575,3 +575,8 @@ body {
     max-width: 320px;
   }
 }
+
+
+/* Letter split helpers for GSAP bounce */
+.kls-split { display: inline-block; }
+.kls-split .kls-char { display: inline-block; will-change: transform, opacity; }

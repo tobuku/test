@@ -168,6 +168,55 @@ if (window.gsap) {
     // - slight blur that resolves
     // - snappy easing
     gsap.defaults({ ease: "power3.out", duration: 0.95 });
+    // Letter-splitting bounce (hero + section headers)
+    function klsSplitLetters(el) {
+      if (!el) return;
+      if (el.classList && el.classList.contains("kls-split")) return;
+
+      // Only split plain-text headings (avoid breaking nested markup)
+      if (el.children && el.children.length) return;
+
+      const text = (el.textContent || "").trim();
+      if (!text) return;
+
+      el.textContent = "";
+      const frag = document.createDocumentFragment();
+      for (const ch of text) {
+        const span = document.createElement("span");
+        span.className = "kls-char";
+        span.textContent = ch === " " ? "\u00A0" : ch;
+        frag.appendChild(span);
+      }
+      el.appendChild(frag);
+      el.classList.add("kls-split");
+    }
+
+    function klsBounceChars(el, opts) {
+      klsSplitLetters(el);
+
+      const chars = gsap.utils.toArray(".kls-char", el);
+      if (!chars.length) return;
+
+      gsap.fromTo(
+        chars,
+        { y: opts.yFrom, scale: opts.scaleFrom, opacity: 0 },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: opts.duration,
+          ease: "bounce.out",
+          stagger: opts.stagger,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            end: "top 50%",
+            toggleActions: "play none none reset"
+          }
+        }
+      );
+    }
+
 
     if (!reduceMotion) {
       // Header drop-in
