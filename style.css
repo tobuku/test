@@ -696,3 +696,10 @@ body {
 
 /* Gallery hover inertia */
 .gallery-item img { will-change: transform; }
+
+
+/* Gallery image clarity override */
+#gallery .gallery-item img {
+  opacity: 1 !important;
+  filter: none !important;
+}

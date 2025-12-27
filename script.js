@@ -399,7 +399,7 @@ if (heroP) {
 // Hero images animate on load. Other images roll in on scroll and then stay locked at y:0/rotate:0.
 if (window.ScrollTrigger) {
   const rollImages = gsap.utils
-    .toArray(".gallery-item img, .service-photo img, .project-card img, .review-card img")
+    .toArray(".service-photo img, .project-card img, .review-card img")
     .filter((img) => !img.classList.contains("hero-logo"));
 
   rollImages.forEach((img) => {
@@ -429,6 +429,9 @@ if (window.ScrollTrigger) {
 
 // Gallery hover inertia (free alternative to InertiaPlugin)
 // Tracks pointer velocity over the gallery and "kicks" images on hover, then springs back.
+// Force gallery images to full color (prevents haze)
+gsap.set("#gallery .gallery-item img", { opacity: 1, filter: "none" });
+
 (function galleryHoverInertia() {
   const gallery = document.querySelector("#gallery");
   if (!gallery) return;
@@ -447,9 +450,9 @@ if (window.ScrollTrigger) {
   const imgs = gsap.utils.toArray("#gallery .gallery-item img");
   imgs.forEach((img) => {
     img.addEventListener("mouseenter", () => {
-      const kickX = gsap.utils.clamp(-60, 60, deltaX * 2.2);
-      const kickY = gsap.utils.clamp(-60, 60, deltaY * 2.2);
-      const tilt = (Math.random() - 0.5) * 10;
+      const kickX = gsap.utils.clamp(-140, 140, deltaX * 4.8);
+      const kickY = gsap.utils.clamp(-140, 140, deltaY * 4.8);
+      const tilt = (Math.random() - 0.5) * 18;
 
       gsap.killTweensOf(img);
 
