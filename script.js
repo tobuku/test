@@ -365,7 +365,37 @@ if (heroP) {
 
 
       
-            // Roll images IN and lock in place (no roll-out)
+            // Hero images: clip reveal (no gap artifacts)
+      // Instead of translating the image (which can show container background),
+      // we reveal it using clip-path so it is always visually flush.
+      if (window.ScrollTrigger) {
+        const heroImgs = gsap.utils.toArray(".hero-photo img, .hero-photo-large img");
+        heroImgs.forEach((img, i) => {
+          gsap.set(img, {
+            willChange: "clip-path,transform,opacity,filter",
+            clipPath: "inset(0 0 100% 0 round 18px)",
+            opacity: 1,
+            filter: "blur(10px)"
+          });
+
+          gsap.to(img, {
+            clipPath: "inset(0 0 0% 0 round 18px)",
+            filter: "blur(0px)",
+            duration: 1.15,
+            ease: "power3.out",
+            delay: 0.15 + i * 0.08
+          });
+
+          // Optional micro-settle: very small rotation/scale to feel premium
+          gsap.fromTo(
+            img,
+            { scale: 1.03, rotate: -1.2 },
+            { scale: 1.0, rotate: 0, duration: 1.15, ease: "power3.out", delay: 0.15 + i * 0.08 }
+          );
+        });
+      }
+
+      // Roll images IN and lock in place (no roll-out)
       // Hero images animate on load. Other images roll in on scroll and then stay locked at y:0/rotate:0.
       if (window.ScrollTrigger) {
         const heroImgs = gsap.utils.toArray(".hero-photo img, .hero-photo-large img");

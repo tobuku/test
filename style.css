@@ -586,3 +586,16 @@ body {
 /* Letter split helpers for GSAP bounce */
 .kls-split { display: inline-block; }
 .kls-split .kls-char { display: inline-block; will-change: transform, opacity; }
+
+
+/* Hero image clip reveal (prevents any gap artifacts) */
+.hero-photo, .hero-photo-large {
+  overflow: hidden;
+  position: relative;
+}
+.hero-photo img, .hero-photo-large img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
