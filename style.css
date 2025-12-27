@@ -206,9 +206,9 @@ body {
 }
 
 .section-alt {
-  background-color: #f9fafb;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  color: #e5e7eb;
+  background-color: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
 }
 
 .section h2 {
@@ -600,4 +600,34 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+
+/* Section-alt readable text */
+.section-alt h2,
+.section-alt h3 {
+  color: #f8fafc;
+}
+
+.section-alt .section-subtitle,
+.section-alt p {
+  color: rgba(248, 250, 252, 0.82);
+}
+
+/* Keep cards readable on dark background */
+.section-alt .feature-card,
+.section-alt .review-card {
+  background: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.section-alt .feature-card h3,
+.section-alt .review-card h3 {
+  color: #f8fafc;
+}
+
+.section-alt .feature-card p,
+.section-alt .review-card p,
+.section-alt .review-card .review-meta {
+  color: rgba(248, 250, 252, 0.80);
 }
