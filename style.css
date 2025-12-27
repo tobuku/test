@@ -631,3 +631,25 @@ body {
 .section-alt .review-card .review-meta {
   color: rgba(248, 250, 252, 0.80);
 }
+
+
+/* Section-alt card overrides (fix white cards + low contrast) */
+.section-alt .why-card,
+.section-alt .testimonial-card {
+  background-color: #0b1220;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.section-alt .why-card h3,
+.section-alt .testimonial-card h3 {
+  color: #f8fafc;
+}
+
+.section-alt .why-card p,
+.section-alt .testimonial-card .quote {
+  color: rgba(248, 250, 252, 0.84);
+}
+
+.section-alt .testimonial-name {
+  color: rgba(248, 250, 252, 0.70);
+}
