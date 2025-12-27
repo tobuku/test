@@ -192,30 +192,27 @@ if (window.gsap) {
     }
 
     function klsBounceChars(el, opts) {
-      klsSplitLetters(el);
+function klsSplitLetters(el) {
+  if (!el) return;
+  if (el.classList && el.classList.contains("kls-split")) return;
 
-      const chars = gsap.utils.toArray(".kls-char", el);
-      if (!chars.length) return;
+  const text = (el.textContent || "").trim();
+  if (!text) return;
 
-      gsap.fromTo(
-        chars,
-        { y: opts.yFrom, scale: opts.scaleFrom, opacity: 0 },
-        {
-          y: 0,
-          scale: 1,
-          opacity: 1,
-          duration: opts.duration,
-          ease: "bounce.out",
-          stagger: opts.stagger,
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            end: "top 50%",
-            toggleActions: "play none none reset"
-          }
-        }
-      );
-    }
+  el.innerHTML = "";
+  const frag = document.createDocumentFragment();
+
+  for (const ch of text) {
+    const span = document.createElement("span");
+    span.className = "kls-char";
+    span.textContent = ch === " " ? "\u00A0" : ch;
+    frag.appendChild(span);
+  }
+
+  el.appendChild(frag);
+  el.classList.add("kls-split");
+}
+
 
 
     if (!reduceMotion) {
