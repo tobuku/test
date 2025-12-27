@@ -168,18 +168,21 @@ if (window.gsap) {
     // - slight blur that resolves
     // - snappy easing
     gsap.defaults({ ease: "power3.out", duration: 0.95 });
-    // Letter-splitting bounce (hero + section headers)
+
+    // Letter-splitting bounce helpers
     function klsSplitLetters(el) {
       if (!el) return;
       if (el.classList && el.classList.contains("kls-split")) return;
 
-      // Only split plain-text headings (avoid breaking nested markup)
-      if (el.children && el.children.length) return;
-
       const text = (el.textContent || "").trim();
       if (!text) return;
 
-      el.textContent = "";
+      // Ensure heading itself is visible even if other animations set opacity
+      el.style.opacity = "1";
+      el.style.transform = "none";
+      el.style.filter = "none";
+
+      el.innerHTML = "";
       const frag = document.createDocumentFragment();
       for (const ch of text) {
         const span = document.createElement("span");
@@ -192,27 +195,30 @@ if (window.gsap) {
     }
 
     function klsBounceChars(el, opts) {
-function klsSplitLetters(el) {
-  if (!el) return;
-  if (el.classList && el.classList.contains("kls-split")) return;
+      klsSplitLetters(el);
 
-  const text = (el.textContent || "").trim();
-  if (!text) return;
+      const chars = gsap.utils.toArray(".kls-char", el);
+      if (!chars.length) return;
 
-  el.innerHTML = "";
-  const frag = document.createDocumentFragment();
-
-  for (const ch of text) {
-    const span = document.createElement("span");
-    span.className = "kls-char";
-    span.textContent = ch === " " ? "\u00A0" : ch;
-    frag.appendChild(span);
-  }
-
-  el.appendChild(frag);
-  el.classList.add("kls-split");
-}
-
+      gsap.fromTo(
+        chars,
+        { y: opts.yFrom, scale: opts.scaleFrom, opacity: 0 },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: opts.duration,
+          ease: "bounce.out",
+          stagger: opts.stagger,
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            end: "top 50%",
+            toggleActions: "play none none reset"
+          }
+        }
+      );
+    }
 
 
     if (!reduceMotion) {
@@ -235,19 +241,14 @@ function klsSplitLetters(el) {
         const heroBtns = hero.querySelectorAll(".btn");
         const heroImgs = hero.querySelectorAll("img");
 
-        setInitial([heroH1, heroP, heroBtns, heroImgs].flat());
+        setInitial([heroP, heroBtns, heroImgs].flat());
 
         const tl = gsap.timeline({ delay: 0.12 });
-
         if (heroH1) {
-          tl.fromTo(
-            heroH1,
-            { y: 46, opacity: 0, scale: 0.98, filter: "blur(10px)" },
-            { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.0 }
-          );
+          // Hero headline: 5x stronger than section headers
+          klsBounceChars(heroH1, { yFrom: -1200, scaleFrom: 0.85, duration: 2.1, stagger: 0.022 });
         }
-
-        if (heroP) {
+if (heroP) {
           tl.fromTo(
             heroP,
             { y: 26, opacity: 0, filter: "blur(8px)" },
@@ -361,6 +362,15 @@ function klsSplitLetters(el) {
       // Detail pages
       revealOnScroll(".breadcrumbs", { y: 24, duration: 0.75 });
       revealOnScroll(".service-detail, .service-detail > *", { stagger: 0.06, y: 34, duration: 0.9 });
+
+
+      // Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
+      // Keep y: -240 for headers, as requested.
+      gsap.utils.toArray("main h2, section h2").forEach((h2) => {
+        // Avoid doubling on the hero headline if the site structure changes
+        if (h2.closest(".hero")) return;
+        klsBounceChars(h2, { yFrom: -240, scaleFrom: 0.92, duration: 1.6, stagger: 0.018 });
+      });
 
       // Button micro interactions: more noticeable, still tasteful
       const buttons = document.querySelectorAll(".btn");
