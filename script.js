@@ -364,7 +364,38 @@ if (heroP) {
       revealOnScroll(".service-detail, .service-detail > *", { stagger: 0.06, y: 34, duration: 0.9 });
 
 
-      // Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
+      
+      // Roll images in/out with scroll (scrubbed)
+      // Applies to content photos and gallery images, skips logos/icons.
+      if (window.ScrollTrigger) {
+        const rollImages = gsap.utils.toArray(
+          ".hero-photo img, .hero-photo-large img, .gallery-item img, .service-photo img, .project-card img, .review-card img"
+        ).filter((img) => !img.classList.contains("hero-logo"));
+
+        rollImages.forEach((img) => {
+          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform" });
+
+          gsap.fromTo(
+            img,
+            { y: 90, rotate: -35, opacity: 0.0, scale: 0.98 },
+            {
+              y: -90,
+              rotate: 35,
+              opacity: 1,
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: img,
+                start: "top 90%",
+                end: "bottom 10%",
+                scrub: 0.9
+              }
+            }
+          );
+        });
+      }
+
+// Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
       // Keep y: -240 for headers, as requested.
       gsap.utils.toArray("main h2, section h2").forEach((h2) => {
         // Avoid doubling on the hero headline if the site structure changes
