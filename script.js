@@ -397,4 +397,35 @@ if (heroP) {
         });
       }
 
+// Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
+      // Keep y: -240 for headers, as requested.
+      gsap.utils.toArray("main h2, section h2").forEach((h2) => {
+        // Avoid doubling on the hero headline if the site structure changes
+        if (h2.closest(".hero")) return;
+        klsBounceChars(h2, { yFrom: -240, scaleFrom: 0.92, duration: 1.6, stagger: 0.018 });
+      });
+
+      // Button micro interactions: more noticeable, still tasteful
+      const buttons = document.querySelectorAll(".btn");
+      buttons.forEach((btn) => {
+        gsap.set(btn, { transformOrigin: "50% 50%", willChange: "transform" });
+
+        if (prefersHover) {
+          btn.addEventListener("mouseenter", () => gsap.to(btn, { y: -3, scale: 1.02, duration: 0.18, ease: "power2.out" }));
+          btn.addEventListener("mouseleave", () => gsap.to(btn, { y: 0, scale: 1.0, duration: 0.22, ease: "power2.out" }));
+        }
+
+        btn.addEventListener("mousedown", () => gsap.to(btn, { scale: 0.98, duration: 0.08 }));
+        btn.addEventListener("mouseup", () => gsap.to(btn, { scale: 1.02, duration: 0.12 }));
+        btn.addEventListener("blur", () => gsap.to(btn, { scale: 1.0, duration: 0.12 }));
+      });
+    } else {
+      console.log("HDrywall GSAP: reduced motion enabled, skipping animations");
+    }
+  } catch (err) {
+    // If anything goes wrong with GSAP, fail silently.
+    // The site should remain fully functional.
+    console.warn("HDrywall GSAP error:", err);
+  }
+}
 
