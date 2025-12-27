@@ -397,11 +397,7 @@ if (heroP) {
 
       // Roll images IN and lock in place (no roll-out)
       // Hero images animate on load. Other images roll in on scroll and then stay locked at y:0/rotate:0.
-      if (window.ScrollTrigger) {
-        const heroImgs = gsap.utils.toArray(".hero-photo img, .hero-photo-large img");
-        heroImgs.forEach((img) => {
-          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,opacity" });
-          gsap.fromTo(
+      if (window.ScrollTrigger) {gsap.fromTo(
             img,
             { y: 70, rotate: -35, opacity: 0, scale: 0.99 },
             { y: 0, rotate: 0, opacity: 1, scale: 1, duration: 1.05, ease: "power3.out" }
