@@ -365,31 +365,39 @@ if (heroP) {
 
 
       
-      // Roll images IN and lock in place (no roll-out)
-      // The idea: image rolls/settles into the exact layout position, then stays put.
-      // On scroll-up, it reverses back out.
+            // Roll images IN and lock in place (no roll-out)
+      // Hero images animate on load. Other images roll in on scroll and then stay locked at y:0/rotate:0.
       if (window.ScrollTrigger) {
-        const rollImages = gsap.utils.toArray(
-          ".hero-photo img, .hero-photo-large img, .gallery-item img, .service-photo img, .project-card img, .review-card img"
-        ).filter((img) => !img.classList.contains("hero-logo"));
+        const heroImgs = gsap.utils.toArray(".hero-photo img, .hero-photo-large img");
+        heroImgs.forEach((img) => {
+          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,opacity" });
+          gsap.fromTo(
+            img,
+            { y: 70, rotate: -35, opacity: 0, scale: 0.99 },
+            { y: 0, rotate: 0, opacity: 1, scale: 1, duration: 1.05, ease: "power3.out" }
+          );
+        });
+
+        const rollImages = gsap.utils
+          .toArray(".gallery-item img, .service-photo img, .project-card img, .review-card img")
+          .filter((img) => !img.classList.contains("hero-logo"));
 
         rollImages.forEach((img) => {
-          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,filter,opacity" });
+          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,opacity" });
 
           gsap.fromTo(
             img,
-            { y: 80, rotate: -45, opacity: 0, scale: 0.985, filter: "grayscale(1) brightness(0.85)" },
+            { y: 80, rotate: -45, opacity: 0, scale: 0.99 },
             {
               y: 0,
               rotate: 0,
               opacity: 1,
               scale: 1,
-              filter: "grayscale(0) brightness(1)",
               duration: 1.05,
               ease: "power3.out",
               scrollTrigger: {
                 trigger: img,
-                start: "top 85%",
+                start: "top 95%",
                 toggleActions: "play none none reverse"
               }
             }
