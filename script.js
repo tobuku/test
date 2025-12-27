@@ -365,65 +365,36 @@ if (heroP) {
 
 
       
-      // Roll images in/out with scroll (scrubbed)
-      // Applies to content photos and gallery images, skips logos/icons.
+      // Roll images IN and lock in place (no roll-out)
+      // The idea: image rolls/settles into the exact layout position, then stays put.
+      // On scroll-up, it reverses back out.
       if (window.ScrollTrigger) {
         const rollImages = gsap.utils.toArray(
           ".hero-photo img, .hero-photo-large img, .gallery-item img, .service-photo img, .project-card img, .review-card img"
         ).filter((img) => !img.classList.contains("hero-logo"));
 
         rollImages.forEach((img) => {
-          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform" });
+          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,filter,opacity" });
 
           gsap.fromTo(
             img,
-            { y: 90, rotate: -35, opacity: 0.0, scale: 0.98 },
+            { y: 80, rotate: -45, opacity: 0, scale: 0.985, filter: "grayscale(1) brightness(0.85)" },
             {
-              y: -90,
-              rotate: 35,
+              y: 0,
+              rotate: 0,
               opacity: 1,
               scale: 1,
-              ease: "none",
+              filter: "grayscale(0) brightness(1)",
+              duration: 1.05,
+              ease: "power3.out",
               scrollTrigger: {
                 trigger: img,
-                start: "top 90%",
-                end: "bottom 10%",
-                scrub: 0.9
+                start: "top 85%",
+                toggleActions: "play none none reverse"
               }
             }
           );
         });
       }
 
-// Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
-      // Keep y: -240 for headers, as requested.
-      gsap.utils.toArray("main h2, section h2").forEach((h2) => {
-        // Avoid doubling on the hero headline if the site structure changes
-        if (h2.closest(".hero")) return;
-        klsBounceChars(h2, { yFrom: -240, scaleFrom: 0.92, duration: 1.6, stagger: 0.018 });
-      });
-
-      // Button micro interactions: more noticeable, still tasteful
-      const buttons = document.querySelectorAll(".btn");
-      buttons.forEach((btn) => {
-        gsap.set(btn, { transformOrigin: "50% 50%", willChange: "transform" });
-
-        if (prefersHover) {
-          btn.addEventListener("mouseenter", () => gsap.to(btn, { y: -3, scale: 1.02, duration: 0.18, ease: "power2.out" }));
-          btn.addEventListener("mouseleave", () => gsap.to(btn, { y: 0, scale: 1.0, duration: 0.22, ease: "power2.out" }));
-        }
-
-        btn.addEventListener("mousedown", () => gsap.to(btn, { scale: 0.98, duration: 0.08 }));
-        btn.addEventListener("mouseup", () => gsap.to(btn, { scale: 1.02, duration: 0.12 }));
-        btn.addEventListener("blur", () => gsap.to(btn, { scale: 1.0, duration: 0.12 }));
-      });
-    } else {
-      console.log("HDrywall GSAP: reduced motion enabled, skipping animations");
-    }
-  } catch (err) {
-    // If anything goes wrong with GSAP, fail silently.
-    // The site should remain fully functional.
-    console.warn("HDrywall GSAP error:", err);
-  }
-}
 
