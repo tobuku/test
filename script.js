@@ -396,40 +396,35 @@ if (heroP) {
       }
 
       // Roll images IN and lock in place (no roll-out)
-      // Hero images animate on load. Other images roll in on scroll and then stay locked at y:0/rotate:0.
-      if (window.ScrollTrigger) {gsap.fromTo(
-            img,
-            { y: 70, rotate: -35, opacity: 0, scale: 0.99 },
-            { y: 0, rotate: 0, opacity: 1, scale: 1, duration: 1.05, ease: "power3.out" }
-          );
-        });
+// Hero images animate on load. Other images roll in on scroll and then stay locked at y:0/rotate:0.
+if (window.ScrollTrigger) {
+  const rollImages = gsap.utils
+    .toArray(".gallery-item img, .service-photo img, .project-card img, .review-card img")
+    .filter((img) => !img.classList.contains("hero-logo"));
 
-        const rollImages = gsap.utils
-          .toArray(".gallery-item img, .service-photo img, .project-card img, .review-card img")
-          .filter((img) => !img.classList.contains("hero-logo"));
+  rollImages.forEach((img) => {
+    gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,opacity" });
 
-        rollImages.forEach((img) => {
-          gsap.set(img, { transformOrigin: "50% 50%", willChange: "transform,opacity" });
-
-          gsap.fromTo(
-            img,
-            { y: 80, rotate: -45, opacity: 0, scale: 0.99 },
-            {
-              y: 0,
-              rotate: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 1.05,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: img,
-                start: "top 95%",
-                toggleActions: "play none none reverse"
-              }
-            }
-          );
-        });
+    gsap.fromTo(
+      img,
+      { y: 80, rotate: -45, opacity: 0, scale: 0.99 },
+      {
+        y: 0,
+        rotate: 0,
+        opacity: 1,
+        scale: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img,
+          start: "top 90%",
+          end: "bottom 10%",
+          scrub: 0.9
+        }
       }
+    );
+  });
+}
+
 
 // Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
       // Keep y: -240 for headers, as requested.
