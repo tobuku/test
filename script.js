@@ -426,6 +426,65 @@ if (window.ScrollTrigger) {
 }
 
 
+
+// Gallery hover inertia (free alternative to InertiaPlugin)
+// Tracks pointer velocity over the gallery and "kicks" images on hover, then springs back.
+(function galleryHoverInertia() {
+  const gallery = document.querySelector("#gallery");
+  if (!gallery) return;
+
+  let oldX = 0, oldY = 0, deltaX = 0, deltaY = 0;
+
+  const update = (e) => {
+    deltaX = e.clientX - oldX;
+    deltaY = e.clientY - oldY;
+    oldX = e.clientX;
+    oldY = e.clientY;
+  };
+
+  gallery.addEventListener("pointermove", update, { passive: true });
+
+  const imgs = gsap.utils.toArray("#gallery .gallery-item img");
+  imgs.forEach((img) => {
+    img.addEventListener("mouseenter", () => {
+      const kickX = gsap.utils.clamp(-60, 60, deltaX * 2.2);
+      const kickY = gsap.utils.clamp(-60, 60, deltaY * 2.2);
+      const tilt = (Math.random() - 0.5) * 10;
+
+      gsap.killTweensOf(img);
+
+      gsap.to(img, {
+        x: kickX,
+        y: kickY,
+        rotate: tilt,
+        duration: 0.28,
+        ease: "power3.out",
+        overwrite: true
+      });
+
+      gsap.to(img, {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        duration: 0.95,
+        ease: "elastic.out(1, 0.45)",
+        delay: 0.03
+      });
+    });
+
+    img.addEventListener("mouseleave", () => {
+      gsap.to(img, {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        duration: 0.7,
+        ease: "power3.out"
+      });
+    });
+  });
+})();
+
+
 // Bounce section headers (letter-by-letter). Re-triggers on scroll up/down.
       // Keep y: -240 for headers, as requested.
       gsap.utils.toArray("main h2, section h2").forEach((h2) => {
